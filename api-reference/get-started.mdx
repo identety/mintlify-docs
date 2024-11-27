@@ -3,18 +3,34 @@ title: 'Getting Started'
 ---
 
 ## Base URL
-- Self-hosted: `http://localhost:3000` or your custom domain
-- Cloud: `https://{org_identifier}.identety.dev` 
+
+* Self-hosted: `http://localhost:3000` or your custom domain
+
+* Cloud: `https://{org_identifier}.identety.dev`
 
 ## Authentication
+
 Include an API key or cloud token in the `Authorization` header:
+
 ```
 Authorization: Bearer <api_key_or_token>
 ```
 
 ## Client Types
-- `client_type: public` for SPA/mobile 
-- `client_type: private` for server
-- `client_type: m2m` for machine-to-machine
+
+* `client_type: public` for SPA/mobile
+
+* `client_type: private` for server
+
+* `client_type: m2m` for machine-to-machine
 
 Use the appropriate base URL, authentication, and client type for your self-hosted or cloud environment.
+
+| Endpoint     | Description                                                         |
+| ------------ | ------------------------------------------------------------------- |
+| `/oauth/*`   | OAuth endpoints                                                     |
+| `/oidc/*`    | OIDC endpoints                                                      |
+| `/auth/*`    | Auth endpoints                                                      |
+| `/clients/*` | Client management (x-api-key, identety:god scope)                   |
+| `/roles/*`   | Role management (x-api-key, identety:god scope)                     |
+| `/tenants/*` | Tenant management for multi-tenancy (x-api-key, identety:god scope) |
