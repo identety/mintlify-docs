@@ -40,6 +40,14 @@
     {
       "group": "Get Started",
       "pages": ["general-docs/introduction"]
+    },
+    {
+      "group": "API Documentation",
+      "pages": ["api-reference/introduction", "api-reference/get-started"]
+    },
+    {
+      "group": "Clients",
+      "pages": ["api-reference/clients/get", "api-reference/clients/create"]
     }
   ],
   "footerSocials": {
