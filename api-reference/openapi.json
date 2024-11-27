@@ -1,194 +1,218 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
-    },
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "http://sandbox.mintlify.com"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ],
+  "openapi": "3.0.0",
   "paths": {
-    "/plants": {
+    "/": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
+        "operationId": "AppController_getHello",
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "Plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "description": ""
           }
-        }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
         },
-        "responses": {
-          "200": {
-            "description": "plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
+        "tags": ["App"]
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+    "/clients/{id}": {
+      "get": {
+        "operationId": "ClientController_show",
         "parameters": [
           {
             "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
             "required": true,
+            "in": "path",
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
+          "200": {
+            "description": "Client found successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/ClientResponseDto"
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized. Invalid API key."
+          },
+          "404": {
+            "description": "Client not found"
           }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Plant": {
-        "required": [
-          "name"
+        },
+        "security": [
+          {
+            "x-api-key": []
+          }
         ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
+        "summary": "Create new client",
+        "tags": ["Client"]
+      }
+    },
+    "/clients": {
+      "post": {
+        "operationId": "ClientController_createClient",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClientDto"
               }
             }
           }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
+        },
+        "responses": {
+          "201": {
+            "description": "Client created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientResponseDto"
+                }
+              }
+            }
           },
-          "message": {
-            "type": "string"
+          "401": {
+            "description": "Unauthorized. Invalid API key."
           }
-        }
+        },
+        "security": [
+          {
+            "x-api-key": []
+          }
+        ],
+        "tags": ["Client"]
+      }
+    }
+  },
+  "info": {
+    "title": "Identety API",
+    "description": "Identity Provider API",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "x-api-key": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key"
       }
     },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
+    "schemas": {
+      "ClientSettings": {
+        "type": "object",
+        "properties": {}
+      },
+      "ClientResponseDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Client Name"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["public", "private", "m2m"],
+            "description": "Client type"
+          },
+          "redirectUris": {
+            "description": "Redirect URIs",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "allowedScopes": {
+            "description": "Allowed Scopes",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "allowedGrants": {
+            "type": "array",
+            "description": "Allowed Grants",
+            "items": {
+              "type": "string",
+              "enum": [
+                "authorization_code",
+                "client_credentials",
+                "refresh_token"
+              ]
+            }
+          },
+          "settings": {
+            "description": "Client Settings",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientSettings"
+              }
+            ]
+          },
+          "id": {
+            "type": "string",
+            "description": "Client ID"
+          }
+        },
+        "required": ["name", "type", "id"]
+      },
+      "CreateClientDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Client Name"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["public", "private", "m2m"],
+            "description": "Client type"
+          },
+          "redirectUris": {
+            "description": "Redirect URIs",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "allowedScopes": {
+            "description": "Allowed Scopes",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "allowedGrants": {
+            "type": "array",
+            "description": "Allowed Grants",
+            "items": {
+              "type": "string",
+              "enum": [
+                "authorization_code",
+                "client_credentials",
+                "refresh_token"
+              ]
+            }
+          },
+          "settings": {
+            "description": "Client Settings",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientSettings"
+              }
+            ]
+          }
+        },
+        "required": ["name", "type"]
       }
     }
   }
