@@ -13,6 +13,101 @@
         "tags": ["App"]
       }
     },
+    "/clients": {
+      "get": {
+        "operationId": "ClientController_index",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "created_at",
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "desc",
+              "enum": ["asc", "desc"],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientListResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "x-api-key": []
+          }
+        ],
+        "summary": "Get all clients",
+        "tags": ["Client"]
+      },
+      "post": {
+        "operationId": "ClientController_createClient",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClientDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The record has been successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "x-api-key": []
+          }
+        ],
+        "tags": ["Client"]
+      }
+    },
     "/clients/{id}": {
       "get": {
         "operationId": "ClientController_show",
@@ -51,25 +146,32 @@
         ],
         "summary": "Create new client",
         "tags": ["Client"]
-      }
-    },
-    "/clients": {
-      "post": {
-        "operationId": "ClientController_createClient",
-        "parameters": [],
+      },
+      "patch": {
+        "operationId": "ClientController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateClientDto"
+                "$ref": "#/components/schemas/UpdateClientDto"
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "description": "Client created successfully",
+          "200": {
+            "description": "Client found successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -80,6 +182,9 @@
           },
           "401": {
             "description": "Unauthorized. Invalid API key."
+          },
+          "404": {
+            "description": "Client not found"
           }
         },
         "security": [
@@ -87,6 +192,7 @@
             "x-api-key": []
           }
         ],
+        "summary": "Update client",
         "tags": ["Client"]
       }
     }
@@ -108,6 +214,116 @@
       }
     },
     "schemas": {
+      "ClientNode": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-123"
+          },
+          "clientId": {
+            "type": "string",
+            "example": "client_abc123"
+          },
+          "name": {
+            "type": "string",
+            "example": "My Client"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["public", "private", "m2m"],
+            "example": "private"
+          },
+          "redirectUris": {
+            "example": ["https://example.com/callback"],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "allowedScopes": {
+            "example": ["openid", "profile"],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "allowedGrants": {
+            "example": ["authorization_code"],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          },
+          "settings": {
+            "type": "object",
+            "example": {
+              "tokenEndpointAuthMethod": "client_secret_basic",
+              "accessTokenTTL": 3600
+            }
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2024-01-01T00:00:00Z"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2024-01-01T00:00:00Z"
+          }
+        },
+        "required": [
+          "id",
+          "clientId",
+          "name",
+          "type",
+          "redirectUris",
+          "allowedScopes",
+          "allowedGrants",
+          "isActive",
+          "settings",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "NodeMeta": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number",
+            "example": 10
+          },
+          "page": {
+            "type": "number",
+            "example": 1
+          },
+          "limit": {
+            "type": "number",
+            "example": 10
+          }
+        },
+        "required": ["total", "page", "limit"]
+      },
+      "ClientListResponse": {
+        "type": "object",
+        "properties": {
+          "nodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClientNode"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/NodeMeta"
+          }
+        },
+        "required": ["nodes", "meta"]
+      },
       "ClientSettings": {
         "type": "object",
         "properties": {}
@@ -213,6 +429,50 @@
           }
         },
         "required": ["name", "type"]
+      },
+      "UpdateClientDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Client Name"
+          },
+          "redirectUris": {
+            "description": "Redirect URIs",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "allowedScopes": {
+            "description": "Allowed Scopes",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "allowedGrants": {
+            "type": "array",
+            "description": "Allowed Grants",
+            "items": {
+              "type": "string",
+              "enum": [
+                "authorization_code",
+                "client_credentials",
+                "refresh_token"
+              ]
+            }
+          },
+          "settings": {
+            "description": "Client Settings",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientSettings"
+              }
+            ]
+          }
+        },
+        "required": ["name"]
       }
     }
   }
