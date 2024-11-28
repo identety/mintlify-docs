@@ -49,8 +49,10 @@
       "group": "Clients",
       "pages": [
         "api-reference/clients/model",
+        "api-reference/clients/list",
         "api-reference/clients/get",
-        "api-reference/clients/create"
+        "api-reference/clients/create",
+        "api-reference/clients/patch"
       ]
     }
   ],

@@ -5,11 +5,7 @@
       "get": {
         "operationId": "AppController_getHello",
         "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
+        "responses": { "200": { "description": "" } },
         "tags": ["App"]
       }
     },
@@ -21,28 +17,19 @@
             "name": "page",
             "required": false,
             "in": "query",
-            "schema": {
-              "default": 1,
-              "type": "number"
-            }
+            "schema": { "default": 1, "type": "number" }
           },
           {
             "name": "limit",
             "required": false,
             "in": "query",
-            "schema": {
-              "default": 10,
-              "type": "number"
-            }
+            "schema": { "default": 10, "type": "number" }
           },
           {
             "name": "sortBy",
             "required": false,
             "in": "query",
-            "schema": {
-              "default": "created_at",
-              "type": "string"
-            }
+            "schema": { "default": "created_at", "type": "string" }
           },
           {
             "name": "sort",
@@ -53,25 +40,37 @@
               "enum": ["asc", "desc"],
               "type": "string"
             }
+          },
+          {
+            "name": "columns",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "Clients retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClientListResponse"
+                  "$ref": "#/components/schemas/PaginatedClientSwaggerModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Invalid API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnAuthorizedResponseSwaggerModel"
                 }
               }
             }
           }
         },
-        "security": [
-          {
-            "x-api-key": []
-          }
-        ],
+        "security": [{ "x-api-key": [] }],
         "summary": "Get all clients",
         "tags": ["Client"]
       },
@@ -82,29 +81,42 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateClientDto"
-              }
+              "schema": { "$ref": "#/components/schemas/CreateClientDto" }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "The record has been successfully created.",
+            "description": "Client created successfully.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ClientSwaggerModel" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Invalid API key.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClientResponseDto"
+                  "$ref": "#/components/schemas/UnAuthorizedResponseSwaggerModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Client not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponseSwaggerModel"
                 }
               }
             }
           }
         },
-        "security": [
-          {
-            "x-api-key": []
-          }
-        ],
+        "security": [{ "x-api-key": [] }],
+        "summary": "Create new client",
         "tags": ["Client"]
       }
     },
@@ -116,9 +128,7 @@
             "name": "id",
             "required": true,
             "in": "path",
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -126,73 +136,129 @@
             "description": "Client found successfully",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClientResponseDto"
-                }
+                "schema": { "$ref": "#/components/schemas/ClientSwaggerModel" }
               }
             }
           },
           "401": {
-            "description": "Unauthorized. Invalid API key."
+            "description": "Unauthorized. Invalid API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnAuthorizedResponseSwaggerModel"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Client not found"
+            "description": "Client not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponseSwaggerModel"
+                }
+              }
+            }
           }
         },
-        "security": [
-          {
-            "x-api-key": []
-          }
-        ],
+        "security": [{ "x-api-key": [] }],
         "summary": "Create new client",
         "tags": ["Client"]
       },
       "patch": {
-        "operationId": "ClientController_update",
+        "operationId": "ClientController_updateClient",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           }
         ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateClientDto"
-              }
+              "schema": { "$ref": "#/components/schemas/UpdateClientDto" }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Client found successfully",
+            "description": "Client updated successfully",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClientResponseDto"
-                }
+                "schema": { "$ref": "#/components/schemas/ClientSwaggerModel" }
               }
             }
           },
           "401": {
-            "description": "Unauthorized. Invalid API key."
+            "description": "Unauthorized. Invalid API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnAuthorizedResponseSwaggerModel"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Client not found"
+            "description": "Client not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponseSwaggerModel"
+                }
+              }
+            }
           }
         },
-        "security": [
+        "security": [{ "x-api-key": [] }],
+        "summary": "Update client",
+        "tags": ["Client"]
+      },
+      "delete": {
+        "operationId": "ClientController_deleteClient",
+        "parameters": [
           {
-            "x-api-key": []
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
           }
         ],
-        "summary": "Update client",
+        "responses": {
+          "200": {
+            "description": "Client deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ClientSwaggerModel" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Invalid API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnAuthorizedResponseSwaggerModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Client not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponseSwaggerModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "x-api-key": [] }],
+        "summary": "Delete client",
         "tags": ["Client"]
       }
     }
@@ -207,187 +273,96 @@
   "servers": [],
   "components": {
     "securitySchemes": {
-      "x-api-key": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "x-api-key"
-      }
+      "x-api-key": { "type": "apiKey", "in": "header", "name": "x-api-key" }
     },
     "schemas": {
-      "ClientNode": {
+      "ClientSwaggerModel": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "example": "uuid-123"
-          },
-          "clientId": {
-            "type": "string",
-            "example": "client_abc123"
-          },
-          "name": {
-            "type": "string",
-            "example": "My Client"
-          },
-          "type": {
-            "type": "string",
-            "enum": ["public", "private", "m2m"],
-            "example": "private"
-          },
+          "id": { "type": "string", "example": "uuid-123" },
+          "clientId": { "type": "string", "example": "client_abc123" },
+          "clientSecret": { "type": "string", "example": "secret_xyz789" },
+          "name": { "type": "string", "example": "My Client" },
+          "type": { "type": "string", "enum": ["public", "private", "m2m"] },
           "redirectUris": {
             "example": ["https://example.com/callback"],
             "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "items": { "type": "string" }
           },
           "allowedScopes": {
             "example": ["openid", "profile"],
             "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "items": { "type": "string" }
           },
           "allowedGrants": {
             "example": ["authorization_code"],
             "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "items": { "type": "string" }
           },
-          "isActive": {
-            "type": "boolean",
-            "example": true
-          },
+          "isActive": { "type": "boolean", "example": true },
           "settings": {
             "type": "object",
             "example": {
               "tokenEndpointAuthMethod": "client_secret_basic",
               "accessTokenTTL": 3600
             }
-          },
-          "createdAt": {
-            "format": "date-time",
-            "type": "string",
-            "example": "2024-01-01T00:00:00Z"
-          },
-          "updatedAt": {
-            "format": "date-time",
-            "type": "string",
-            "example": "2024-01-01T00:00:00Z"
           }
         },
         "required": [
           "id",
           "clientId",
+          "clientSecret",
           "name",
           "type",
           "redirectUris",
           "allowedScopes",
           "allowedGrants",
           "isActive",
-          "settings",
-          "createdAt",
-          "updatedAt"
+          "settings"
         ]
       },
-      "NodeMeta": {
-        "type": "object",
-        "properties": {
-          "total": {
-            "type": "number",
-            "example": 10
-          },
-          "page": {
-            "type": "number",
-            "example": 1
-          },
-          "limit": {
-            "type": "number",
-            "example": 10
-          }
-        },
-        "required": ["total", "page", "limit"]
-      },
-      "ClientListResponse": {
+      "PaginatedClientSwaggerModel": {
         "type": "object",
         "properties": {
           "nodes": {
             "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ClientNode"
-            }
+            "items": { "$ref": "#/components/schemas/ClientSwaggerModel" }
           },
           "meta": {
-            "$ref": "#/components/schemas/NodeMeta"
+            "type": "object",
+            "example": {
+              "totalCount": 1,
+              "currentPage": 1,
+              "hasNextPage": false,
+              "totalPages": 1
+            }
           }
         },
         "required": ["nodes", "meta"]
       },
-      "ClientSettings": {
-        "type": "object",
-        "properties": {}
-      },
-      "ClientResponseDto": {
+      "UnAuthorizedResponseSwaggerModel": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "Client Name"
-          },
-          "type": {
-            "type": "string",
-            "enum": ["public", "private", "m2m"],
-            "description": "Client type"
-          },
-          "redirectUris": {
-            "description": "Redirect URIs",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "allowedScopes": {
-            "description": "Allowed Scopes",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "allowedGrants": {
-            "type": "array",
-            "description": "Allowed Grants",
-            "items": {
-              "type": "string",
-              "enum": [
-                "authorization_code",
-                "client_credentials",
-                "refresh_token"
-              ]
-            }
-          },
-          "settings": {
-            "description": "Client Settings",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ClientSettings"
-              }
-            ]
-          },
-          "id": {
-            "type": "string",
-            "description": "Client ID"
-          }
+          "message": { "type": "string", "example": "Invalid API key" },
+          "statusCode": { "type": "number", "example": 401 },
+          "error": { "type": "string", "example": "Unauthorized" }
         },
-        "required": ["name", "type", "id"]
+        "required": ["message", "statusCode", "error"]
       },
+      "NotFoundResponseSwaggerModel": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "example": "Client not found" },
+          "statusCode": { "type": "number", "example": 401 },
+          "error": { "type": "string", "example": "Unauthorized" }
+        },
+        "required": ["message", "statusCode", "error"]
+      },
+      "ClientSettings": { "type": "object", "properties": {} },
       "CreateClientDto": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "Client Name"
-          },
+          "name": { "type": "string", "description": "Client Name" },
           "type": {
             "type": "string",
             "enum": ["public", "private", "m2m"],
@@ -396,16 +371,12 @@
           "redirectUris": {
             "description": "Redirect URIs",
             "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "items": { "type": "string" }
           },
           "allowedScopes": {
             "description": "Allowed Scopes",
             "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "items": { "type": "string" }
           },
           "allowedGrants": {
             "type": "array",
@@ -421,11 +392,7 @@
           },
           "settings": {
             "description": "Client Settings",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ClientSettings"
-              }
-            ]
+            "allOf": [{ "$ref": "#/components/schemas/ClientSettings" }]
           }
         },
         "required": ["name", "type"]
@@ -433,23 +400,16 @@
       "UpdateClientDto": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "Client Name"
-          },
+          "name": { "type": "string", "description": "Client Name" },
           "redirectUris": {
             "description": "Redirect URIs",
             "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "items": { "type": "string" }
           },
           "allowedScopes": {
             "description": "Allowed Scopes",
             "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "items": { "type": "string" }
           },
           "allowedGrants": {
             "type": "array",
@@ -465,11 +425,7 @@
           },
           "settings": {
             "description": "Client Settings",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ClientSettings"
-              }
-            ]
+            "allOf": [{ "$ref": "#/components/schemas/ClientSettings" }]
           }
         },
         "required": ["name"]
