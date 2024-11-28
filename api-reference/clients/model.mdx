@@ -1,0 +1,39 @@
+---
+title: 'Identety Client'
+description: 'In Identety, clients represent applications or services that can request tokens and access protected resources on behalf of users. Clients are a fundamental concept in the OAuth 2.0 and OpenID Connect (OIDC) protocols, which Identety implements.'
+---
+
+## Client Model
+The client model in Identety includes the following properties:
+
+- `id`: Unique identifier for the client (auto-generated)
+- `name`: Human-readable name of the client application
+- `type`: Type of the client (public, private, or m2m)
+- `clientId`: Public identifier for the client
+- `clientSecret`: Secret used for authentication (private and m2m clients only)
+- `redirectUris`: Allowed redirect URIs for the client
+- `scopes`: Scopes that the client is allowed to request
+- `accessTokenLifetime`: Lifetime of access tokens issued to the client
+- `refreshTokenLifetime`: Lifetime of refresh tokens issued to the client
+
+## Client Types
+Identety supports three types of clients:
+
+1. **Public clients**: Used for applications where the client secret cannot be kept confidential, such as single-page web apps (SPA) or mobile apps. Public clients are identified by their `clientId` only.
+
+2. **Private clients**: Used for server-side applications that can securely store the `clientSecret`. Private clients are authenticated using both `clientId` and `clientSecret`.
+
+3. **Machine-to-machine (m2m) clients**: Used for server-to-server communication without user interaction. M2M clients are also authenticated using `clientId` and `clientSecret`.
+
+## Why Clients are Needed
+Clients play a crucial role in the OAuth and OIDC workflows:
+
+1. **Access delegation**: Clients allow users to grant limited access to their protected resources without sharing their credentials. This enables third-party applications to access APIs on behalf of users.
+
+2. **Scope-based authorization**: Clients specify the `scopes` they need, which represent permissions to access specific resources. This allows for fine-grained access control.
+
+3. **Secure authentication**: Client authentication ensures that only registered and authorized applications can request tokens and access protected resources.
+
+4. **Token management**: Clients are responsible for securely storing and managing the access and refresh tokens they receive from Identety.
+
+By defining and managing clients, Identety provides a secure and flexible way to integrate third-party applications into your identity and access management system.

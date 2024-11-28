@@ -47,7 +47,11 @@
     },
     {
       "group": "Clients",
-      "pages": ["api-reference/clients/get", "api-reference/clients/create"]
+      "pages": [
+        "api-reference/clients/model",
+        "api-reference/clients/get",
+        "api-reference/clients/create"
+      ]
     }
   ],
   "footerSocials": {
