@@ -39,7 +39,7 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["general-docs/introduction"]
+      "pages": ["general-docs/introduction", "general-docs/installation"]
     },
     {
       "group": "API Documentation",
