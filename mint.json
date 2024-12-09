@@ -1,6 +1,11 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Identety Documentation",
+  "theme": "prism",
+  "modeToggle": {
+    "default": "dark",
+    "isHidden": true
+  },
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -15,30 +20,26 @@
       "to": "#000000"
     }
   },
-  "topbarCtaButton": {
-    "name": "Github",
-    "url": "https://github.com/identety/identety"
+  "api": {
+    "baseUrl": "https://api.identety.dev",
+    "playground": {
+      "mode": "simple",
+      "disableProxy": true
+    }
   },
   "tabs": [
     {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
-  "anchors": [
-    {
-      "name": "Github Repository",
-      "icon": "github",
-      "url": "https://github.com/identety/identety"
+      "name": "Documentation",
+      "url": "general-docs"
     },
     {
-      "name": "Discussion Forum",
-      "url": "https://github.com/identety/identety/discussions"
+      "name": "API Documentation",
+      "url": "api-reference"
     }
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Documentation",
       "pages": ["general-docs/introduction", "general-docs/installation"]
     },
     {
@@ -48,12 +49,27 @@
     {
       "group": "Clients",
       "pages": [
-        "api-reference/clients/model",
-        "api-reference/clients/list",
-        "api-reference/clients/get",
-        "api-reference/clients/create",
-        "api-reference/clients/patch"
+        "api-reference/client/model",
+        "api-reference/client/create-client",
+        "api-reference/client/get-client-details-by-id",
+        "api-reference/client/update-client",
+        "api-reference/client/delete-client"
       ]
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Github",
+    "url": "https://github.com/identety/identety"
+  },
+  "anchors": [
+    {
+      "name": "Github Repository",
+      "icon": "github",
+      "url": "https://github.com/identety/identety"
+    },
+    {
+      "name": "Discussion Forum",
+      "url": "https://github.com/identety/identety/discussions"
     }
   ],
   "footerSocials": {
