@@ -29,8 +29,12 @@
   },
   "tabs": [
     {
-      "name": "Documentation",
+      "name": "Guides",
       "url": "general-docs"
+    },
+    {
+      "name": "Libraries",
+      "url": "libs"
     },
     {
       "name": "API Documentation",
@@ -39,8 +43,12 @@
   ],
   "navigation": [
     {
-      "group": "Documentation",
+      "group": "Guides",
       "pages": ["general-docs/introduction", "general-docs/installation"]
+    },
+    {
+      "group": "Libraries",
+      "pages": ["libs/node.mdx"]
     },
     {
       "group": "API Documentation",
@@ -50,10 +58,30 @@
       "group": "Clients",
       "pages": [
         "api-reference/client/model",
-        "api-reference/client/create-client",
-        "api-reference/client/get-client-details-by-id",
-        "api-reference/client/update-client",
-        "api-reference/client/delete-client"
+        "api-reference/client/create",
+        "api-reference/client/details",
+        "api-reference/client/update",
+        "api-reference/client/delete"
+      ]
+    },
+    {
+      "group": "Roles",
+      "pages": [
+        "api-reference/role/model",
+        "api-reference/role/create",
+        "api-reference/role/details",
+        "api-reference/role/update",
+        "api-reference/role/delete"
+      ]
+    },
+    {
+      "group": "Users",
+      "pages": [
+        "api-reference/user/model",
+        "api-reference/user/create",
+        "api-reference/user/details",
+        "api-reference/user/update",
+        "api-reference/user/delete"
       ]
     }
   ],

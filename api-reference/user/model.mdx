@@ -1,0 +1,22 @@
+---
+title: 'User Overview'
+description: 'The Role module provides role-based access control (RBAC) capabilities. It allows you to create, manage, and assign roles to users for fine-grained permission control.'
+---
+
+## Features
+
+- Role CRUD operations with multi-tenant support
+- System and custom roles
+- Role-based access control
+- Role name uniqueness per tenant
+- Automatic snake_case conversion for role names
+
+## API Endpoints
+
+### Admin APIs
+```http
+GET    /roles              # List roles with pagination
+GET    /roles/:id          # Get role by ID
+POST   /roles              # Create new role
+PATCH  /roles/:id          # Update role
+DELETE /roles/:id          # Delete role
